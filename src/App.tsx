@@ -4,6 +4,7 @@ import Address from "@/components/Address/Address";
 import AddressBook from "@/components/AddressBook/AddressBook";
 import Button from "@/components/Button/Button";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
+import Form from "@/components/Form/Form";
 import InputText from "@/components/InputText/InputText";
 import Radio from "@/components/Radio/Radio";
 import Section from "@/components/Section/Section";
@@ -139,7 +140,7 @@ function App() {
           </small>
         </h1>
         {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
-        <form onSubmit={handleAddressSubmit}>
+        {/* <form onSubmit={handleAddressSubmit}>
           <fieldset>
             <legend>🏠 Find an address</legend>
             <div className={styles.formRow}>
@@ -160,7 +161,17 @@ function App() {
             </div>
             <Button type="submit">Find</Button>
           </fieldset>
-        </form>
+        </form> */}
+        <Form
+          label="🏠 Find an address"
+          loading={false}
+          onFormSubmit={handleAddressSubmit}
+          submitText="Find"
+          formEntries={[
+            { name: "postCode", placeholder: "Post Code", extraProps: { value: values.postCode, onChange } },
+            { name: "houseNumber", placeholder: "House number", extraProps: { value: values.houseNumber, onChange } },
+          ]}
+        />
         {addresses.length > 0 &&
           addresses.map((address) => {
             return (
@@ -175,7 +186,7 @@ function App() {
             );
           })}
         {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
-        {values.selectedAddress && (
+        {/* {values.selectedAddress && (
           <form onSubmit={handlePersonSubmit}>
             <fieldset>
               <legend>✏️ Add personal info to address</legend>
@@ -198,6 +209,18 @@ function App() {
               <Button type="submit">Add to addressbook</Button>
             </fieldset>
           </form>
+        )} */}
+        {values.selectedAddress && (
+          <Form
+            label="✏️ Add personal info to address"
+            loading={false}
+            onFormSubmit={handlePersonSubmit}
+            submitText="Add to addressbook"
+            formEntries={[
+              { name: "firstName", placeholder: "First name", extraProps: { value: values.firstName, onChange } },
+              { name: "lastName", placeholder: "Last name", extraProps: { value: values.lastName, onChange } },
+            ]}
+          />
         )}
 
         {/* TODO: Create an <ErrorMessage /> component for displaying an error message */}
