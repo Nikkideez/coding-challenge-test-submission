@@ -3,6 +3,7 @@ import React from "react";
 import Address from "@/components/Address/Address";
 import AddressBook from "@/components/AddressBook/AddressBook";
 import Button from "@/components/Button/Button";
+import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import InputText from "@/components/InputText/InputText";
 import Radio from "@/components/Radio/Radio";
 import Section from "@/components/Section/Section";
@@ -200,7 +201,7 @@ function App() {
         )}
 
         {/* TODO: Create an <ErrorMessage /> component for displaying an error message */}
-        {error && <div className="error">{error}</div>}
+        {error && <ErrorMessage message={error} />}
 
         {/* TODO: Add a button to clear all form fields.
         Button must look different from the default primary button, see design.
