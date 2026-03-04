@@ -10,9 +10,17 @@
 }
 
 .item {
-  align-items: center;
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .item {
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+  }
 }
 
 .item address {
