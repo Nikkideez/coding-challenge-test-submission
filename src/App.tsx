@@ -9,6 +9,7 @@ import Section from "@/components/Section/Section";
 import useAddressBook from "@/hooks/useAddressBook";
 import useFormFields from "@/hooks/useFormFields";
 
+import transformAddress from "./core/models/address";
 import styles from "./App.module.css";
 import { Address as AddressType } from "./types";
 
@@ -73,6 +74,27 @@ function App() {
    */
   const handleAddressSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(undefined);
+    setAddresses([]);
+
+    try {
+      const res = await fetch(
+        `/api/getAddresses?postcode=${values.postCode}&streetnumber=${values.houseNumber}`
+      );
+      const data = await res.json();
+
+      if (data.status === "error") {
+        setError(data.errormessage);
+        return;
+      }
+
+      const transformed = data.details.map((addr: any) =>
+        transformAddress({ ...addr, houseNumber: values.houseNumber })
+      );
+      setAddresses(transformed);
+    } catch (err) {
+      setError("Failed to fetch addresses");
+    }
   };
 
   /** TODO: Add basic validation to ensure first name and last name fields aren't empty
@@ -80,6 +102,11 @@ function App() {
    */
   const handlePersonSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!values.firstName || !values.lastName) {
+      setError("First name and last name fields mandatory!");
+      return;
+    }
 
     if (!values.selectedAddress || !addresses.length) {
       setError(
@@ -175,8 +202,8 @@ function App() {
         {/* TODO: Create an <ErrorMessage /> component for displaying an error message */}
         {error && <div className="error">{error}</div>}
 
-        {/* TODO: Add a button to clear all form fields. 
-        Button must look different from the default primary button, see design. 
+        {/* TODO: Add a button to clear all form fields.
+        Button must look different from the default primary button, see design.
         Button text name must be "Clear all fields"
         On Click, it must clear all form fields, remove all search results and clear all prior
         error messages
