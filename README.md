@@ -42,7 +42,7 @@ Here is a list of all the TODO's to make life a bit easier:
 
 ### Redux
 
-- [ ] Prevent duplicate addresses.
+- [x] Prevent duplicate addresses.
 - [ ] Write a state update which removes an address from the addresses array.
 
 ### Bonus
