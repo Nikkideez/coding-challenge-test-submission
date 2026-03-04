@@ -30,10 +30,10 @@ Here is a list of all the TODO's to make life a bit easier:
 - [x] Write a custom hook to set form fields in a more generic way.
 - [x] Fetch addresses based on houseNumber and postCode. Do not introduce any additional 3rd party libraries to do this.
 - [x] Create generic `<Form />` component to display form rows, legend and a submit button.
-- [ ] Create an `<ErrorMessage />` component for displaying an error message.
-- [ ] Add a button to clear all form fields. Button must look different from the default primary button, see design.
-- [ ] Add conditional classNames for `primary` and `secondary` variant in `<Button />` component\
-- [ ] Ensure form validations are applied in both "Find an Address" and "Add Personal Info to address" based on comments in TODO
+- [x] Create an `<ErrorMessage />` component for displaying an error message.
+- [x] Add a button to clear all form fields. Button must look different from the default primary button, see design.
+- [x] Add conditional classNames for `primary` and `secondary` variant in `<Button />` component\
+- [x] Ensure form validations are applied in both "Find an Address" and "Add Personal Info to address" based on comments in TODO
 
 ## Typescript
 
