@@ -7,6 +7,7 @@ import InputText from "@/components/InputText/InputText";
 import Radio from "@/components/Radio/Radio";
 import Section from "@/components/Section/Section";
 import useAddressBook from "@/hooks/useAddressBook";
+import useFormFields from "@/hooks/useFormFields";
 
 import styles from "./App.module.css";
 import { Address as AddressType } from "./types";
@@ -20,11 +21,18 @@ function App() {
    * - Remove all individual React.useState
    * - Remove all individual onChange handlers, like handlePostCodeChange for example
    */
-  const [postCode, setPostCode] = React.useState("");
-  const [houseNumber, setHouseNumber] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [selectedAddress, setSelectedAddress] = React.useState("");
+  // const [postCode, setPostCode] = React.useState("");
+  // const [houseNumber, setHouseNumber] = React.useState("");
+  // const [firstName, setFirstName] = React.useState("");
+  // const [lastName, setLastName] = React.useState("");
+  // const [selectedAddress, setSelectedAddress] = React.useState("");
+  const { values, onChange, clearAll } = useFormFields({
+    postCode: '',
+    houseNumber: '',
+    firstName: '',
+    lastName: '',
+    selectedAddress: '',
+  });
   /**
    * Results states
    */
@@ -38,21 +46,21 @@ function App() {
   /**
    * Text fields onChange handlers
    */
-  const handlePostCodeChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setPostCode(e.target.value);
-
-  const handleHouseNumberChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setHouseNumber(e.target.value);
-
-  const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setFirstName(e.target.value);
-
-  const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setLastName(e.target.value);
-
-  const handleSelectedAddressChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => setSelectedAddress(e.target.value);
+  // const handlePostCodeChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  //   setPostCode(e.target.value);
+  //
+  // const handleHouseNumberChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  //   setHouseNumber(e.target.value);
+  //
+  // const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  //   setFirstName(e.target.value);
+  //
+  // const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  //   setLastName(e.target.value);
+  //
+  // const handleSelectedAddressChange = (
+  //   e: React.ChangeEvent<HTMLInputElement>
+  // ) => setSelectedAddress(e.target.value);
 
   /** TODO: Fetch addresses based on houseNumber and postCode using the local BE api
    * - Example URL of API: ${process.env.NEXT_PUBLIC_URL}/api/getAddresses?postcode=1345&streetnumber=350
@@ -73,7 +81,7 @@ function App() {
   const handlePersonSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!selectedAddress || !addresses.length) {
+    if (!values.selectedAddress || !addresses.length) {
       setError(
         "No address selected, try to select an address or find one if you haven't"
       );
@@ -81,7 +89,7 @@ function App() {
     }
 
     const foundAddress = addresses.find(
-      (address) => address.id === selectedAddress
+      (address) => address.id === values.selectedAddress
     );
 
     if (!foundAddress) {
@@ -89,7 +97,7 @@ function App() {
       return;
     }
 
-    addAddress({ ...foundAddress, firstName, lastName });
+    addAddress({ ...foundAddress, firstName: values.firstName, lastName: values.lastName });
   };
 
   return (
@@ -109,16 +117,16 @@ function App() {
             <div className={styles.formRow}>
               <InputText
                 name="postCode"
-                onChange={handlePostCodeChange}
+                onChange={onChange}
                 placeholder="Post Code"
-                value={postCode}
+                value={values.postCode}
               />
             </div>
             <div className={styles.formRow}>
               <InputText
                 name="houseNumber"
-                onChange={handleHouseNumberChange}
-                value={houseNumber}
+                onChange={onChange}
+                value={values.houseNumber}
                 placeholder="House number"
               />
             </div>
@@ -132,14 +140,14 @@ function App() {
                 name="selectedAddress"
                 id={address.id}
                 key={address.id}
-                onChange={handleSelectedAddressChange}
+                onChange={onChange}
               >
                 <Address {...address} />
               </Radio>
             );
           })}
         {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
-        {selectedAddress && (
+        {values.selectedAddress && (
           <form onSubmit={handlePersonSubmit}>
             <fieldset>
               <legend>✏️ Add personal info to address</legend>
@@ -147,16 +155,16 @@ function App() {
                 <InputText
                   name="firstName"
                   placeholder="First name"
-                  onChange={handleFirstNameChange}
-                  value={firstName}
+                  onChange={onChange}
+                  value={values.firstName}
                 />
               </div>
               <div className={styles.formRow}>
                 <InputText
                   name="lastName"
                   placeholder="Last name"
-                  onChange={handleLastNameChange}
-                  value={lastName}
+                  onChange={onChange}
+                  value={values.lastName}
                 />
               </div>
               <Button type="submit">Add to addressbook</Button>
