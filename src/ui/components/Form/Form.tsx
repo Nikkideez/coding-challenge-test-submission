@@ -17,7 +17,8 @@ interface FormProps {
   label: string;
   loading: boolean;
   formEntries: FormEntry[];
-  onFormSubmit: () => void;
+  // onFormSubmit: () => void;
+  onFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   submitText: string;
 }
 
