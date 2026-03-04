@@ -37,8 +37,8 @@ Here is a list of all the TODO's to make life a bit easier:
 
 ## Typescript
 
-- [ ] Refactor the `extraProps` in `<Form />` component. Use a proper type to cover all the different form property types.
-- [ ] Defined a typescript type for the button type inside `src/types/button`. This type should only include all the possible types for a button.
+- [x] Refactor the `extraProps` in `<Form />` component. Use a proper type to cover all the different form property types.
+- [x] Defined a typescript type for the button type inside `src/types/button`. This type should only include all the possible types for a button.
 
 ### Redux
 
